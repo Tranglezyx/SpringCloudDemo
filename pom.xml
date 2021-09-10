@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.trangle</groupId>
+    <artifactId>SpringCloudDemo</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <mysql.version>5.1.41</mysql.version>
+        <pagehelper.version>5.1.10</pagehelper.version>
+        <swagger.version>2.8.0</swagger.version>
+        <lombok.version>1.18.8</lombok.version>
+        <druid.version>1.1.10</druid.version>
+        <log4j.version>1.2.17</log4j.version>
+        <mybatis-plus.version>3.0.7.1</mybatis-plus.version>
+        <fastjson.version>1.2.60</fastjson.version>
+        <pagehelper-starter>1.2.3</pagehelper-starter>
+        <hibernate-validator>6.0.17.Final</hibernate-validator>
+    </properties>
+
+    <modules>
+        <module>Gateway</module>
+        <module>Order</module>
+        <module>Pay</module>
+    </modules>
+
+
+</project>
