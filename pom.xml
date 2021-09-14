@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.9.RELEASE</version>
+        <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -17,24 +17,95 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <common.version>1.0-SNAPSHOT</common.version>
         <java.version>1.8</java.version>
-        <mysql.version>5.1.41</mysql.version>
-        <pagehelper.version>5.1.10</pagehelper.version>
-        <swagger.version>2.8.0</swagger.version>
-        <lombok.version>1.18.8</lombok.version>
-        <druid.version>1.1.10</druid.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <log4j.version>1.2.17</log4j.version>
-        <mybatis-plus.version>3.0.7.1</mybatis-plus.version>
-        <fastjson.version>1.2.60</fastjson.version>
-        <pagehelper-starter>1.2.3</pagehelper-starter>
-        <hibernate-validator>6.0.17.Final</hibernate-validator>
+        <mysql.version>5.1.47</mysql.version>
+        <druid.version>1.1.16</druid.version>
+        <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
+        <collection4.version>4.1</collection4.version>
     </properties>
 
     <modules>
         <module>Gateway</module>
         <module>Order</module>
         <module>Pay</module>
+        <module>common</module>
     </modules>
 
+    <!--    子模块继承后,提供作用：锁定版本+子module不用写groupId和version-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.2.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.1.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.trangle</groupId>
+                <artifactId>common</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${collection4.version}</version>
+            </dependency>
+
+            <!--            <dependency>-->
+            <!--                <groupId>org.mybatis.spring.boot</groupId>-->
+            <!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
+            <!--                <version>${mybatis.spring.boot.version}</version>-->
+            <!--            </dependency>-->
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>SpringCloudDemo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

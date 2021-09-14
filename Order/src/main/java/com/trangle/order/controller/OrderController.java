@@ -15,4 +15,10 @@ public class OrderController {
     public Object getOrder(Long id){
         return "order -" + id;
     }
+
+    @GetMapping("/test-get")
+    public Object getOrder1(Long id){
+        System.out.println("测试 --- 测试 ");
+        return "order -" + id;
+    }
 }

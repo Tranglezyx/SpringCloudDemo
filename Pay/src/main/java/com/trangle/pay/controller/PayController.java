@@ -10,9 +10,8 @@ import java.util.Random;
  * @author trangle
  */
 @RestController
-@RequestMapping("/pay")
+@RequestMapping("/pay1")
 public class PayController {
-
 
     @GetMapping("getMoney")
     public Object getPayMoney(Long orderId){
