@@ -10,7 +10,7 @@ import java.util.Random;
  * @author trangle
  */
 @RestController
-@RequestMapping("/pay1")
+@RequestMapping("/pay")
 public class PayController {
 
     @GetMapping("getMoney")

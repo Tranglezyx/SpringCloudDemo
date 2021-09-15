@@ -86,12 +86,6 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>${collection4.version}</version>
             </dependency>
-
-            <!--            <dependency>-->
-            <!--                <groupId>org.mybatis.spring.boot</groupId>-->
-            <!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
-            <!--                <version>${mybatis.spring.boot.version}</version>-->
-            <!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 

@@ -17,16 +17,21 @@ spring:
           lower-case-service-id: true
       routes:
         - id: Pay-Route
-          # uri以lb://开头（lb代表从注册中心获取服务），后面接的就是你需要转发到的服务名称
-          uri: lb://pay/
+          # uri以lb://开头（lb代表从注册中心获取服务），后面接的就是需要转发到的服务名称
+          uri: lb://pay
           predicates:
-            #定义匹配规则，满足/pay/**的路径都会被转发到uri的配置服务去
+            # 定义匹配规则，满足/pay/**的路径都会被转发到uri的配置服务去
             - Path=/pay/**
-          #第二个服务的路由规则
+          # 去掉uri路径中的服务名
+          filters:
+            - StripPrefix=1
+          # 第二个服务的路由规则
         - id: Order-Route
-          uri: lb://order/
+          uri: lb://order
           predicates:
             - Path=/order/**
+          filters:
+            - StripPrefix=1
 
 logging:
   level:

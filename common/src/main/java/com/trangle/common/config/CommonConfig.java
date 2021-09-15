@@ -14,7 +14,6 @@ import javax.servlet.Filter;
 public class CommonConfig {
 
     @Bean
-    @ConditionalOnMissingBean
     public Filter tokenFilter(){
         return new TokenFilter();
     }
