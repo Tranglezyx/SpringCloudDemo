@@ -18,7 +18,8 @@ public class TokenFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         long startTime = System.currentTimeMillis();
         if (log.isInfoEnabled()) {
-            log.info("请求路径为： -- {}", ((RequestFacade) servletRequest).getRequestURI());
+            log.info("请求路径为：{}", ((RequestFacade) servletRequest).getRequestURI());
+            log.info("当前端口为：{}", servletRequest.getLocalPort());
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

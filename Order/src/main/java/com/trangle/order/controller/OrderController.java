@@ -4,6 +4,8 @@ import com.trangle.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author trangle
  */
@@ -21,8 +23,12 @@ public class OrderController {
      * @return
      */
     @GetMapping("/get")
-    public Object getOrder(Long id) {
-        return "order -" + id;
+    public Object getOrder(HttpServletRequest request, Long id) throws InterruptedException {
+        int port = request.getServerPort();
+        if(port == 9092){
+            Thread.sleep(10000);
+        }
+        return "order - " + id + " -- port : " + request.getServerPort();
     }
 
     /**
