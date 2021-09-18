@@ -25,9 +25,6 @@ public class OrderController {
     @GetMapping("/get")
     public Object getOrder(HttpServletRequest request, Long id) throws InterruptedException {
         int port = request.getServerPort();
-        if(port == 9092){
-            Thread.sleep(10000);
-        }
         return "order - " + id + " -- port : " + request.getServerPort();
     }
 
