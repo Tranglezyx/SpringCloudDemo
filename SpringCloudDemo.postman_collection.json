@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4498921a-a8b8-4fad-9b65-9c10ff9427ca",
+		"_postman_id": "c4bfd91e-47bd-4efe-ad96-9ca14738ce40",
 		"name": "SpringCloudDemo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,11 +14,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/pay/pay/getMoney",
+							"raw": "localhost:10000/pay/pay/getMoney",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "10000",
 							"path": [
 								"pay",
 								"pay",
@@ -39,11 +39,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/order/order/get?id=1111",
+							"raw": "localhost:10000/order/order/get?id=1111",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "10000",
 							"path": [
 								"order",
 								"order",
@@ -65,11 +65,11 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/order/order/payMoney",
+							"raw": "localhost:10000/order/order/payMoney",
 							"host": [
 								"localhost"
 							],
-							"port": "8080",
+							"port": "10000",
 							"path": [
 								"order",
 								"order",
