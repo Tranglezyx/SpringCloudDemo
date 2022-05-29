@@ -7,4 +7,17 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: Tranlge:8848
+        server-addr: trangle:8848
+rocketmq:
+  name-server: trangle:9876 # NameServer地址
+  consumer:
+    group: consumerGroup # 消费者的组名
+    consumeThreadMin: 2
+    consumeThreadMax: 5
+    consumeMessageBatchMaxSize: 10
+    topics: rocketTopic,rocketTag
+  producer:
+    group: producerGroup # 生产者的组名
+    maxMessageSize: 100
+    sendMsgTimeout: 1000
+    retryTimesWhenSendFailed: 3
