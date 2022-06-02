@@ -1,47 +1,22 @@
 package com.trangle.pay.config;
 
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.exception.MQClientException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.ContextRefreshedEvent;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author trangle
  */
-@Configuration
-public class CustomConsumer extends DefaultConsumerConfigure implements ApplicationListener<ContextRefreshedEvent> {
-
-    Logger log = LoggerFactory.getLogger(CustomConsumer.class);
-
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent arg0) {
-        try {
-            super.listener("t_TopicTest", "Tag1");
-        } catch (MQClientException e) {
-            log.error("消费者监听器启动失败", e);
-        }
-    }
+@Component
+@Slf4j
+@RocketMQMessageListener(topic = RocketmqConfig.TOPIC_NAME, consumerGroup = RocketmqConfig.GROUP_NAME, consumeThreadMax = 1)
+public class CustomConsumer implements RocketMQListener<MessageExt> {
 
     @Override
-    public ConsumeConcurrentlyStatus dealBody(List<MessageExt> msgs) {
-        int num = 1;
-        log.info("进入");
-        for (MessageExt msg : msgs) {
-            log.info("第" + num + "次消息");
-            try {
-                String msgStr = new String(msg.getBody(), "utf-8");
-                log.info(msgStr);
-            } catch (UnsupportedEncodingException e) {
-                log.error("body转字符串解析失败");
-            }
-        }
-        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+    public void onMessage(MessageExt messageExt) {
+        String message = new String(messageExt.getBody());
+        System.out.println(message);
     }
 }

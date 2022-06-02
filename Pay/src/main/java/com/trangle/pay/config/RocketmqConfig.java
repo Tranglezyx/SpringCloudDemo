@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RocketmqConfig {
 
-    public static final String address = "trangle:9876";
+    public static final String TOPIC_NAME = "test_topic";
+    public static final String GROUP_NAME = "test";
 
     private String nameServer;
 

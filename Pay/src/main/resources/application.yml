@@ -9,7 +9,7 @@ spring:
       discovery:
         server-addr: trangle:8848
 rocketmq:
-  name-server: trangle:9876 # NameServer地址
+  name-server: localhost:9876 # NameServer地址
   consumer:
     group: consumerGroup # 消费者的组名
     consumeThreadMin: 2
