@@ -1,5 +1,6 @@
-package com.trangle.pay.config;
+package com.trangle.pay.consumer;
 
+import com.trangle.pay.constant.PayRocketMQConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-@RocketMQMessageListener(topic = RocketmqConfig.TOPIC_NAME, consumerGroup = RocketmqConfig.GROUP_NAME, consumeThreadMax = 1)
-public class CustomConsumer implements RocketMQListener<MessageExt> {
+@RocketMQMessageListener(topic = PayRocketMQConstants.TOPIC_NAME, consumerGroup = PayRocketMQConstants.PAY_NOTICE_GROUP, consumeThreadMax = 1)
+public class PayNoticeConsumer implements RocketMQListener<MessageExt> {
 
     @Override
     public void onMessage(MessageExt messageExt) {
         String message = new String(messageExt.getBody());
-        System.out.println(message);
+        System.out.println("支付提醒收到消息：" + message);
     }
 }
