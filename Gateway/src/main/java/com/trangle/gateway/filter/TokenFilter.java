@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class TokenFilter implements GlobalFilter {
 
-    private static final String TOKEN = "Authorization";
+    private static final String TOKEN = "token";
     private static final String TOKEN_VALUE = "Bearer 123456";
 
     @Override

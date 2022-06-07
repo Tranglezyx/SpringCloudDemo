@@ -37,6 +37,12 @@ spring:
             - Path=/order/**
           filters:
             - StripPrefix=1
+        - id: Storage-Route
+          uri: lb://storage
+          predicates:
+            - Path=/storage/**
+          filters:
+            - StripPrefix=1
 
 logging:
   level:

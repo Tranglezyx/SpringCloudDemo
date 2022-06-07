@@ -1,10 +1,12 @@
 package com.trangle.order.controller;
 
+import com.trangle.order.entity.OrderBasic;
 import com.trangle.order.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author trangle
@@ -13,29 +15,22 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/order")
 public class OrderController {
 
-    @Autowired
+    @Resource
     private OrderService orderService;
 
     /**
      * 获取订单
      *
-     * @param id
      * @return
      */
-    @GetMapping("/get")
-    public Object getOrder(HttpServletRequest request, Long id) throws InterruptedException {
-        int port = request.getServerPort();
-        return "order - " + id + " -- port : " + request.getServerPort();
+    @GetMapping("/list")
+    public List<OrderBasic> getOrder(HttpServletRequest request) throws InterruptedException {
+        return orderService.getOrderList();
     }
 
-    /**
-     * 支付订单
-     *
-     * @param id
-     * @return
-     */
-    @PostMapping("/payMoney")
-    public Boolean payMoney(@RequestBody Long id) {
-        return orderService.payMoney(id);
+    @PostMapping("/add")
+    public Boolean payMoney(@RequestBody OrderBasic orderBasic) {
+        orderService.addOrder(orderBasic);
+        return true;
     }
 }

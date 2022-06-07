@@ -1,15 +1,15 @@
 package com.trangle.order.service;
 
+import com.trangle.order.entity.OrderBasic;
+
+import java.util.List;
+
 /**
  * @author trangle
  */
 public interface OrderService {
 
-    /**
-     * 支付订单
-     *
-     * @param id
-     * @return
-     */
-    Boolean payMoney(Long id);
+    void addOrder(OrderBasic orderBasic);
+
+    List<OrderBasic> getOrderList();
 }

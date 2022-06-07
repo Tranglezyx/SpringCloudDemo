@@ -33,6 +33,7 @@
         <module>Gateway</module>
         <module>Order</module>
         <module>Pay</module>
+        <module>Storage</module>
         <module>common-starter</module>
         <module>common-base</module>
     </modules>

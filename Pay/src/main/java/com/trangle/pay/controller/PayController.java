@@ -1,13 +1,14 @@
 package com.trangle.pay.controller;
 
+import com.trangle.pay.entity.PayBasic;
 import com.trangle.pay.producer.PayProducer;
+import com.trangle.pay.service.PayService;
 import feign.Param;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Random;
 
 /**
@@ -21,6 +22,9 @@ public class PayController {
     @Qualifier("defaultPayProducer")
     private PayProducer payProducer;
 
+    @Resource
+    private PayService payService;
+
     @GetMapping("getMoney")
     public Object getPayMoney(Long orderId){
         return new Random().nextDouble();
@@ -29,5 +33,21 @@ public class PayController {
     @GetMapping("producer")
     public void test(@Param("info") String info) throws Exception {
         payProducer.sendPayMsg(info);
+    }
+
+    @PostMapping("/addUserPay")
+    public void addUserPay(@RequestBody PayBasic payBasic) {
+        payService.addUserPay(payBasic);
+    }
+
+    @PostMapping("/subUserMoney")
+    public void subUserMoney(@RequestBody PayBasic payBasic) {
+        payService.subUserMoney(payBasic);
+    }
+
+
+    @PostMapping("/getMoney")
+    public BigDecimal getMoney(@RequestBody PayBasic payBasic) {
+        return payService.getMoney(payBasic);
     }
 }

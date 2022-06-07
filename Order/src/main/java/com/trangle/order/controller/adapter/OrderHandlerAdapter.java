@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author trangle
  */
-@Component
+//@Component
 public class OrderHandlerAdapter implements HandlerAdapter {
 
     @Override

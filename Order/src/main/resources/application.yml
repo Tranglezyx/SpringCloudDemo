@@ -7,4 +7,41 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: trangle:8848
+        server-addr: 175.178.91.5:8848
+    alibaba:
+      seata:
+        tx-service-group: test_group
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://trangle:3306/spring_cloud_demo_order?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    username: root
+    password: Trangle
+    druid:
+      initial-size: 20  # 初始化大小
+      min-idle: 5  # 最小
+      max-active: 50  # 最大
+      max-wait: 30000  # 连接超时时间
+      time-between-eviction-runs-millis: 30000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000  # 指定一个空闲连接最少空闲多久后可被清除，单位是毫秒
+      validationQuery: SELECT 'x'
+      test-while-idle: true  # 当连接空闲时，是否执行连接测试
+      test-on-borrow: false  # 当从连接池借用连接时，是否测试该连接
+      test-on-return: false  # 在连接归还到连接池时是否测试该连接
+  redis: # redis 配置
+    password: Tr@ngle # 密码
+    host: trangle # ip地址
+    port: 6379 # 端口号
+    lettuce:
+      pool:
+        max-active: 100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 20 # 连接池中的最小空闲连接
+        max-wait: 6000ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 1000ms
+    database: 1
+
+logging:
+  level:
+    com: debug
+    org: debug
