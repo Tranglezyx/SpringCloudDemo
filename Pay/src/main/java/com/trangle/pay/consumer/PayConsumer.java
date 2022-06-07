@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-@RocketMQMessageListener(topic = PayRocketMQConstants.TOPIC_NAME, consumerGroup = PayRocketMQConstants.PAY_GROUP, consumeThreadMax = 1)
+@RocketMQMessageListener(topic = PayRocketMQConstants.TOPIC_NAME,selectorExpression = PayRocketMQConstants.PAY_GROUP, consumerGroup = PayRocketMQConstants.PAY_GROUP, consumeThreadMax = 1)
 public class PayConsumer implements RocketMQListener<MessageExt> {
 
     @Override
