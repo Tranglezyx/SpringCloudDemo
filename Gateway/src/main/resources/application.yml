@@ -7,7 +7,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: trangle:8848
+        server-addr: nacos:8848
     gateway:
 
       httpclient:

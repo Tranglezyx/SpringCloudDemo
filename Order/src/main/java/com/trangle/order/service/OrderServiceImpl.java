@@ -37,10 +37,10 @@ public class OrderServiceImpl implements OrderService {
         orderBasic.setOrderId(orderId);
         orderBasic.setOrderDate(LocalDateTime.now());
         orderBasicMapper.insert(orderBasic);
-        PayMoneyDTO payMoneyDTO = new PayMoneyDTO(orderBasic.getUserId(), orderId, orderBasic.getMoney());
-        payFeign.payMoney(payMoneyDTO);
-        SubGoodsNumDTO subGoodsNumDTO = new SubGoodsNumDTO(orderBasic.getGoodsId(), orderBasic.getGoodsNum());
-        storageFeign.subGoodsNum(subGoodsNumDTO);
+//        PayMoneyDTO payMoneyDTO = new PayMoneyDTO(orderBasic.getUserId(), orderId, orderBasic.getMoney());
+//        payFeign.payMoney(payMoneyDTO);
+//        SubGoodsNumDTO subGoodsNumDTO = new SubGoodsNumDTO(orderBasic.getGoodsId(), orderBasic.getGoodsNum());
+//        storageFeign.subGoodsNum(subGoodsNumDTO);
     }
 
     @Override

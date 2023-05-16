@@ -1,5 +1,10 @@
 server:
   port: 9000
+  tomcat:
+    accept-count: 300
+    threads:
+      max: 300
+      min-spare: 30
 
 spring:
   application:
@@ -7,14 +12,14 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 175.178.91.5:8848
+        server-addr: 127.0.0.1:8848
     alibaba:
       seata:
         tx-service-group: test_group
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://trangle:3306/spring_cloud_demo_order?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://mysql:3306/spring_cloud_demo_order?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: Trangle
     druid:
@@ -29,8 +34,8 @@ spring:
       test-on-borrow: false  # 当从连接池借用连接时，是否测试该连接
       test-on-return: false  # 在连接归还到连接池时是否测试该连接
   redis: # redis 配置
-    password: Tr@ngle # 密码
-    host: trangle # ip地址
+#    password: Tr@ngle # 密码
+    host: redis # ip地址
     port: 6379 # 端口号
     lettuce:
       pool:
