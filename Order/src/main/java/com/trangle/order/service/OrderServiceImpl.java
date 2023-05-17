@@ -1,13 +1,11 @@
 package com.trangle.order.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.trangle.order.dto.PayMoneyDTO;
-import com.trangle.order.dto.SubGoodsNumDTO;
 import com.trangle.order.entity.OrderBasic;
 import com.trangle.order.feign.PayFeign;
 import com.trangle.order.feign.StorageFeign;
+import com.trangle.order.listener.OrderMessageTransactionListener;
 import com.trangle.order.mapper.OrderBasicMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderBasicMapper orderBasicMapper;
     @Resource
     private RocketMQTemplate rocketMQTemplate;
+    @Resource
+    private OrderMessageTransactionListener orderMessageTransactionListener;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -52,6 +51,20 @@ public class OrderServiceImpl implements OrderService {
         String json = JSONObject.toJSONString(orderBasic);
         log.info("生产者生产消息：{}", json);
         rocketMQTemplate.send(topic, MessageBuilder.withPayload(json).build());
+    }
+
+    @Override
+    public void addAndSendTransactionMessage(OrderBasic orderBasic) {
+        String orderId = UUID.randomUUID().toString();
+        orderBasic.setOrderId(orderId);
+        orderBasic.setOrderDate(LocalDateTime.now());
+
+        String storageTopic = "storage_topic" + ":" + "goods_group";
+        String json = JSONObject.toJSONString(orderBasic);
+        log.info("生产者生产消息：{}", json);
+        rocketMQTemplate.sendMessageInTransaction(storageTopic, MessageBuilder.withPayload(json).build(), json);
+        String payTopic = "pay_topic" + ":" + "goods_group";
+        rocketMQTemplate.sendMessageInTransaction(payTopic, MessageBuilder.withPayload(json).build(), json);
     }
 
     @Override

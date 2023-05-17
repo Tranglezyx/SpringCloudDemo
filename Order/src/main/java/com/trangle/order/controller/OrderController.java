@@ -33,4 +33,10 @@ public class OrderController {
         orderService.addOrder(orderBasic);
         return true;
     }
+
+    @PostMapping("/addAndSendTransactionMessage")
+    public Boolean addAndSendTransactionMessage(@RequestBody OrderBasic orderBasic) {
+        orderService.addAndSendTransactionMessage(orderBasic);
+        return true;
+    }
 }
