@@ -1,5 +1,6 @@
 package com.trangle.order.controller;
 
+import com.trangle.dto.ResultDTO;
 import com.trangle.order.entity.OrderBasic;
 import com.trangle.order.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -24,25 +25,25 @@ public class OrderController {
      * @return
      */
     @GetMapping("/list")
-    public List<OrderBasic> getOrder(HttpServletRequest request) throws InterruptedException {
-        return orderService.getOrderList();
+    public ResultDTO<List<OrderBasic>> getOrder(HttpServletRequest request) throws InterruptedException {
+        return ResultDTO.success(orderService.getOrderList()) ;
     }
 
     @PostMapping("/add")
-    public Boolean payMoney(@RequestBody OrderBasic orderBasic) {
+    public ResultDTO<Void> payMoney(@RequestBody OrderBasic orderBasic) {
         orderService.addOrder(orderBasic);
-        return true;
+        return ResultDTO.success();
     }
 
     @PostMapping("/addAndSendTransactionMessage")
-    public Boolean addAndSendTransactionMessage(@RequestBody OrderBasic orderBasic) {
+    public ResultDTO<Void> addAndSendTransactionMessage(@RequestBody OrderBasic orderBasic) {
         orderService.addAndSendTransactionMessage(orderBasic);
-        return true;
+        return ResultDTO.success();
     }
 
     @PostMapping("/addOrderWithFeign")
-    public Boolean addOrderWithFeign(@RequestBody OrderBasic orderBasic) {
+    public ResultDTO<Void> addOrderWithFeign(@RequestBody OrderBasic orderBasic) {
         orderService.addOrderWithFeign(orderBasic);
-        return true;
+        return ResultDTO.success();
     }
 }

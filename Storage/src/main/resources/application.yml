@@ -11,7 +11,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/spring_cloud_demo_storage?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://mysql:3306/demo_storage?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: Trangle
     druid:

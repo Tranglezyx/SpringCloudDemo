@@ -9,7 +9,6 @@ spring:
       discovery:
         server-addr: nacos:8848
     gateway:
-
       httpclient:
         # 设置超时时间
 #        connect-timeout: 2
