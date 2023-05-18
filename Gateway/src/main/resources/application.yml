@@ -43,7 +43,7 @@ spring:
           filters:
             - StripPrefix=1
 
-logging:
-  level:
-    com: debug
-    org: debug
+#logging:
+#  level:
+#    com: debug
+#    org: debug

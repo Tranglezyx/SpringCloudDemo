@@ -42,7 +42,7 @@ public class OrderController {
     }
 
     @PostMapping("/addOrderWithFeign")
-    public ResultDTO<Void> addOrderWithFeign(@RequestBody OrderBasic orderBasic) {
+    public ResultDTO<Void> addOrderWithFeign(HttpServletRequest request,@RequestBody OrderBasic orderBasic) {
         orderService.addOrderWithFeign(orderBasic);
         return ResultDTO.success();
     }
