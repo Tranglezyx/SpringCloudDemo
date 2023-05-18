@@ -61,7 +61,7 @@ rocketmq:
 
 demo:
   order:
-    env: default
+    env: dev
 #logging:
 #  level:
 #    com: debug

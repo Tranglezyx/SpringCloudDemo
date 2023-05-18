@@ -39,4 +39,10 @@ public class OrderController {
         orderService.addAndSendTransactionMessage(orderBasic);
         return true;
     }
+
+    @PostMapping("/addOrderWithFeign")
+    public Boolean addOrderWithFeign(@RequestBody OrderBasic orderBasic) {
+        orderService.addOrderWithFeign(orderBasic);
+        return true;
+    }
 }

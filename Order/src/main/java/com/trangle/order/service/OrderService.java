@@ -11,6 +11,8 @@ public interface OrderService {
 
     void addOrder(OrderBasic orderBasic);
 
+    void addOrderWithFeign(OrderBasic orderBasic);
+
     void addAndSendTransactionMessage(OrderBasic orderBasic);
 
     List<OrderBasic> getOrderList();
