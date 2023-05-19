@@ -53,7 +53,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
             // 创建一个新的交换对象
             ServerWebExchange newExchange = exchangeBuilder.build();
             // 继续过滤器链
-            return chain.filter(newExchange);
+            Mono<Void> filter = chain.filter(newExchange);
+            return filter;
         }
         throw new RuntimeException("请先登录");
     }

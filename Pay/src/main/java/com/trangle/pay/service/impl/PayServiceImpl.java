@@ -5,12 +5,14 @@ import com.trangle.pay.entity.PayBasic;
 import com.trangle.pay.mapper.PayBasicMapper;
 import com.trangle.pay.mapper.PayDetailMapper;
 import com.trangle.pay.service.PayService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 @Service
+@Slf4j
 public class PayServiceImpl implements PayService {
 
     @Resource
@@ -40,7 +42,7 @@ public class PayServiceImpl implements PayService {
                     .set(PayBasic::getMoney, basic.getMoney().subtract(payBasic.getMoney()))
                     .eq(PayBasic::getUserId, payBasic.getUserId()));
         } else {
-            throw new RuntimeException("余额不足！");
+            log.error("余额不足，userId:{}", payBasic.getUserId());
         }
     }
 
