@@ -7,75 +7,40 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.*;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer.REQUEST;
 
+/**
+ * 根据灰度信息动态修改服务节点
+ * 参考类：org.springframework.cloud.loadbalancer.blocking.client.BlockingLoadBalancerClient
+ */
 @Slf4j
 @Component
 public class GrayLoadBalancerConfig implements LoadBalancerClient {
 
     @Resource
-    private  LoadBalancerClientFactory loadBalancerClientFactory;
+    private LoadBalancerClientFactory loadBalancerClientFactory;
     @Resource
-    private  LoadBalancerProperties properties;
+    private LoadBalancerProperties properties;
     @Resource
     private DiscoveryClient discoveryClient;
 
     @Override
     public <T> T execute(String serviceId, LoadBalancerRequest<T> request) throws IOException {
         log.info("GrayLoadBalancerConfig-execute");
-//        String hint = getHint(serviceId);
-//        LoadBalancerRequestAdapter<T, TimedRequestContext> lbRequest = new LoadBalancerRequestAdapter<>(request,
-//                buildRequestContext(request, hint));
-//        Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(serviceId);
-//        supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onStart(lbRequest));
-//        ServiceInstance serviceInstance = choose(serviceId, lbRequest);
-//        if (serviceInstance == null) {
-//            supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onComplete(
-//                    new CompletionContext<>(CompletionContext.Status.DISCARD, lbRequest, new EmptyResponse())));
-//            throw new IllegalStateException("No instances available for " + serviceId);
-//        }
-//        return execute(serviceId, serviceInstance, lbRequest);
         return null;
     }
 
     @Override
     public <T> T execute(String serviceId, ServiceInstance serviceInstance, LoadBalancerRequest<T> request) throws IOException {
         log.info("GrayLoadBalancerConfig-execute");
-//        DefaultResponse defaultResponse = new DefaultResponse(serviceInstance);
-//        Set<LoadBalancerLifecycle> supportedLifecycleProcessors = getSupportedLifecycleProcessors(serviceId);
-//        Request lbRequest = request instanceof Request ? (Request) request : new DefaultRequest<>();
-//        supportedLifecycleProcessors
-//                .forEach(lifecycle -> lifecycle.onStartRequest(lbRequest, new DefaultResponse(serviceInstance)));
-//        try {
-//            T response = request.apply(serviceInstance);
-//            Object clientResponse = getClientResponse(response);
-//            supportedLifecycleProcessors
-//                    .forEach(lifecycle -> lifecycle.onComplete(new CompletionContext<>(CompletionContext.Status.SUCCESS,
-//                            lbRequest, defaultResponse, clientResponse)));
-//            return response;
-//        }
-//        catch (IOException iOException) {
-//            supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onComplete(
-//                    new CompletionContext<>(CompletionContext.Status.FAILED, iOException, lbRequest, defaultResponse)));
-//            throw iOException;
-//        }
-//        catch (Exception exception) {
-//            supportedLifecycleProcessors.forEach(lifecycle -> lifecycle.onComplete(
-//                    new CompletionContext<>(CompletionContext.Status.FAILED, exception, lbRequest, defaultResponse)));
-//            ReflectionUtils.rethrowRuntimeException(exception);
-//        }
         return null;
     }
 
@@ -112,48 +77,11 @@ public class GrayLoadBalancerConfig implements LoadBalancerClient {
                 defaultInstanceList.add(instance);
             }
         }
+        // 这里做的比较简单，永远只取第一个，实际上可以自定义一些策略，比如轮训
         if ("1".equals(gray)) {
             return grayInstanceList.get(0);
         } else {
             return defaultInstanceList.get(0);
         }
     }
-
-    private String getHint(String serviceId) {
-        String defaultHint = properties.getHint().getOrDefault("default", "default");
-        String hintPropertyValue = properties.getHint().get(serviceId);
-        return hintPropertyValue != null ? hintPropertyValue : defaultHint;
-    }
-
-//    private <T> TimedRequestContext buildRequestContext(LoadBalancerRequest<T> delegate, String hint) {
-//        if (delegate instanceof HttpRequestLoadBalancerRequest) {
-//            HttpRequest request = ((HttpRequestLoadBalancerRequest) delegate).getHttpRequest();
-//            if (request != null) {
-//                RequestData requestData = new RequestData(request);
-//                return new RequestDataContext(requestData, hint);
-//            }
-//        }
-//        return new DefaultRequestContext(delegate, hint);
-//    }
-//
-//    private Set<LoadBalancerLifecycle> getSupportedLifecycleProcessors(String serviceId) {
-//        return LoadBalancerLifecycleValidator.getSupportedLifecycleProcessors(
-//                loadBalancerClientFactory.getInstances(serviceId, LoadBalancerLifecycle.class),
-//                DefaultRequestContext.class, Object.class, ServiceInstance.class);
-//    }
-//
-//    private <T> Object getClientResponse(T response) {
-//        ClientHttpResponse clientHttpResponse = null;
-//        if (response instanceof ClientHttpResponse) {
-//            clientHttpResponse = (ClientHttpResponse) response;
-//        }
-//        if (clientHttpResponse != null) {
-//            try {
-//                return new ResponseData(clientHttpResponse, null);
-//            }
-//            catch (IOException ignored) {
-//            }
-//        }
-//        return response;
-//    }
 }
