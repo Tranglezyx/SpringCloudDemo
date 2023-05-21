@@ -19,8 +19,8 @@ public class TokenFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String gray = ((RequestFacade) servletRequest).getHeader("gray");
+        log.info("获取到灰度信息-gray :{}", gray);
         if (StringUtils.isNotEmpty(gray)) {
-            log.info("获取到灰度信息-gray :{}", gray);
             GrayHolder.set(Integer.valueOf(gray));
         }
         filterChain.doFilter(servletRequest, servletResponse);

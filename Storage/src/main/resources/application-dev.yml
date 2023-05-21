@@ -1,27 +1,19 @@
 server:
-  port: 9000
-  tomcat:
-    accept-count: 300
-    threads:
-      max: 300
-      min-spare: 30
+  port: 9030
 
 spring:
   application:
-    name: order
+    name: storage
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
         metadata:
           gray: 1
-    alibaba:
-      seata:
-        tx-service-group: test_group
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/demo_order?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://mysql:3306/demo_storage?useUnicode=true&characterEncoding=utf-8&generateSimpleParameterMetadata=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: Trangle
     druid:
@@ -36,7 +28,7 @@ spring:
       test-on-borrow: false  # 当从连接池借用连接时，是否测试该连接
       test-on-return: false  # 在连接归还到连接池时是否测试该连接
   redis: # redis 配置
-    #    password: Tr@ngle # 密码
+#    password: Tr@ngle # 密码
     host: redis # ip地址
     port: 6379 # 端口号
     lettuce:
@@ -47,7 +39,6 @@ spring:
         max-wait: 6000ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
     timeout: 1000ms
     database: 1
-
 rocketmq:
   name-server: rocketmq:9876 # NameServer地址
   consumer:
@@ -58,10 +49,7 @@ rocketmq:
     topics: rocketTopic,rocketTag
   producer:
     group: producerGroup # 生产者的组名
+#    maxMessageSize: 100 #最大字节数
     sendMsgTimeout: 1000
     retryTimesWhenSendFailed: 3
 
-#logging:
-#  level:
-#    com: debug
-#    org: debug
