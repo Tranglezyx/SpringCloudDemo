@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.trangle.order.mapper.UpdateOnUniqueKeyDemoMapper">
+
+
+    <insert id="insertListOnDuplicateKeyUpdateUniqueKey">
+        INSERT INTO `update_on_unique_key_demo`(`batch_id`, `phone`, `content`, `create_time`)
+        VALUES (#{batchId}, #{phone}, #{content}, #{createTime})
+        ON DUPLICATE KEY UPDATE
+             batch_id = VALUES(batch_id),
+            phone = VALUES(phone),
+            content = VALUES(content),
+            create_time = VALUES(create_time)
+    </insert>
+
+    <insert id="insertListOnDuplicateKey">
+        INSERT INTO `update_on_unique_key_demo`(`batch_id`, `phone`, `content`, `create_time`)
+        VALUES (#{batchId}, #{phone}, #{content}, #{createTime})
+            ON DUPLICATE KEY UPDATE
+                                 content = VALUES(content),
+                                 create_time = VALUES(create_time)
+    </insert>
+
+    <insert id="batchInsertListOnDuplicateKeyUpdateUniqueKey">
+        INSERT INTO `update_on_unique_key_demo`(`batch_id`, `phone`, `content`, `create_time`)
+        VALUES
+        <foreach collection="list" separator="," item="item">
+            (
+             #{item.batchId},
+             #{item.phone},
+             #{item.content},
+             #{item.createTime}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        batch_id = VALUES(batch_id),
+        phone = VALUES(phone),
+        content = VALUES(content),
+        create_time = VALUES(create_time)
+    </insert>
+
+    <insert id="batchInsertListOnDuplicateKey">
+        INSERT INTO `update_on_unique_key_demo`(`batch_id`, `phone`, `content`, `create_time`)
+        VALUES
+        <foreach collection="list" separator="," item="item">
+            (
+            #{item.batchId},
+            #{item.phone},
+            #{item.content},
+            #{item.createTime}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        content = VALUES(content),
+        create_time = VALUES(create_time)
+    </insert>
+</mapper>

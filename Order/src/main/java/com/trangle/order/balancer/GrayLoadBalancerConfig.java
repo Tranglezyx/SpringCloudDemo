@@ -5,7 +5,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.*;
-import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +24,6 @@ import static org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoa
 @Component
 public class GrayLoadBalancerConfig implements LoadBalancerClient {
 
-    @Resource
-    private LoadBalancerClientFactory loadBalancerClientFactory;
-    @Resource
-    private LoadBalancerProperties properties;
     @Resource
     private DiscoveryClient discoveryClient;
 
