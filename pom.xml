@@ -36,6 +36,7 @@
         <module>Storage</module>
         <module>common-starter</module>
         <module>common-base</module>
+        <module>sharding</module>
     </modules>
 
     <!--    子模块继承后,提供作用：锁定版本+子module不用写groupId和version-->
