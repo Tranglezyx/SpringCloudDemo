@@ -2,6 +2,8 @@ server:
   #服务端口号
   port: 8080
 spring:
+  application:
+    name: sharding
   jackson:
     # 时间格式
     date-format: yyyy-MM-dd HH:mm:ss
@@ -13,34 +15,3 @@ spring:
     url: jdbc:mysql://192.168.11.131:30436/zyx-test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
     username: smsuser
     password: simSNUO2dOkF
-  shardingsphere:
-    datasource:
-      names: ds0, ds1
-      ds0:
-        url: jdbc:mysql://192.168.11.131:30436/zyx-test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
-        username: smsuser
-        password: simSNUO2dOkF
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-      ds1:
-        url: jdbc:mysql://192.168.11.131:30436/zyx-test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
-        username: smsuser
-        password: simSNUO2dOkF
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-    sharding:
-      tables:
-        t_sms_to:
-          actual-data-nodes: ds$->{0..1}.t_sms_to_$->{['20231130','20231129','20231128']}_$->{0..9}
-          table-strategy:
-            inline:
-              sharding-column: submit_date,phone
-              algorithm-expression: t_sms_to_$->{submit_date}_$->{phone.charAt(phone.length()-1) % 10}
-#              sharding-algorithm-type: INLINE
-#          key-generate-strategy:
-#            column: submit_date
-
-
-logging:
-  level:
-    com: debug
