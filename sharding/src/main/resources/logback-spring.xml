@@ -51,7 +51,7 @@
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- 最大5000MB 超过最大值，会重新建一个文件-->
-                <maxFileSize>5000MB</maxFileSize>
+                <maxFileSize>500MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <!-- 此日志文件只记录info级别的 -->
@@ -120,8 +120,9 @@
     <root level="INFO">
 <!--        <appender-ref ref="ASYNC_STDOUT"/>-->
 <!--        <appender-ref ref="ASYNC_INFO_FILE"/>-->
-<!--        <appender-ref ref="STDOUT"/>-->
-        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="INFO_FILE"/>-->
+<!--        <appender-ref ref="ERROR_FILE"/>-->
     </root>
 
     <!-- 本地环境/开发环境 日志输出级别 DEBUG -->
