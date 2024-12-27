@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadPoolConstants {
 
-    public static final ThreadPoolExecutor DEFAULT_POOL = new ThreadPoolExecutor(1,
-            100,
+    public static final ThreadPoolExecutor DEFAULT_POOL = new ThreadPoolExecutor(300,
+            300,
             60,
             TimeUnit.SECONDS,
             new SynchronousQueue<Runnable>(),
