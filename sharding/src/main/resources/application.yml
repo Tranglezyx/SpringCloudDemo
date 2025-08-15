@@ -1,6 +1,10 @@
 server:
   #服务端口号
   port: 8080
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 100
 spring:
   application:
     name: sharding

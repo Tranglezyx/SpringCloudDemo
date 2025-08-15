@@ -21,7 +21,7 @@ public class MDCInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        MDC.put("traceId", IdUtil.nanoId(10));
+//        MDC.put("traceId", IdUtil.nanoId(10));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
