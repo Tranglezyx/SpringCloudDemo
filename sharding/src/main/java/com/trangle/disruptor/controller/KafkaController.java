@@ -6,8 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.trangle.disruptor.model.CmppSmsDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
-import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+//import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +25,10 @@ import javax.annotation.Resource;
 @Slf4j
 public class KafkaController {
 
-    @Resource
-    private KafkaTemplate kafkaTemplate;
-    @Resource
-    private KafkaProperties kafkaProperties;
+//    @Resource
+//    private KafkaTemplate kafkaTemplate;
+//    @Resource
+//    private KafkaProperties kafkaProperties;
 
     @PostMapping("/produce")
     public void produce(@RequestBody ProduceDTO produceDTO) {
@@ -41,7 +41,7 @@ public class KafkaController {
             CmppSmsDto cmppSmsDto = new CmppSmsDto();
             cmppSmsDto.setDestId(String.valueOf(RandomUtil.randomLong(13100000000L, 19999999999L)));
             cmppSmsDto.setContent(RandomUtil.randomString(60));
-            kafkaTemplate.send(topic, JSONObject.toJSONString(cmppSmsDto));
+//            kafkaTemplate.send(topic, JSONObject.toJSONString(cmppSmsDto));
         }
     }
 

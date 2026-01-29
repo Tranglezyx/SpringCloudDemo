@@ -1,7 +1,7 @@
 package com.trangle.disruptor.model;
 
-import com.danmi.captcha.disruptor.DisruptorBatchEvent;
-import com.danmi.captcha.disruptor.DisruptorEventFactory;
+import com.trangle.disruptor.disruptor.DisruptorBatchEvent;
+import com.trangle.disruptor.disruptor.DisruptorEventFactory;
 import lombok.Data;
 
 /**

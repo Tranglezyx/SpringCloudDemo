@@ -4,14 +4,14 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.danmi.captcha.disruptor.DisruptorBatchHandler;
-import com.danmi.captcha.disruptor.DisruptorBatchListener;
-import com.danmi.captcha.entity.DisruptorSms;
-import com.danmi.captcha.mapper.DisruptorSmsMapper;
-import com.danmi.captcha.model.CmppSmsDto;
-import com.danmi.captcha.model.CmppSmsDtoBatchEvent;
+import com.trangle.disruptor.disruptor.DisruptorBatchHandler;
+import com.trangle.disruptor.disruptor.DisruptorBatchListener;
+import com.trangle.disruptor.entity.DisruptorSms;
+import com.trangle.disruptor.mapper.DisruptorSmsMapper;
+import com.trangle.disruptor.model.CmppSmsDto;
+import com.trangle.disruptor.model.CmppSmsDtoBatchEvent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -33,8 +33,8 @@ public class DisruptorMonitor implements DisruptorBatchHandler<CmppSmsDto> {
     private static final String KEY_TEMPLATE = "dis:per:{}";
     private static final String QUEUE_NAME = "qqq";
 
-    @Resource
-    private RedisTemplate redisTemplate;
+//    @Resource
+//    private RedisTemplate redisTemplate;
     @Resource
     private DisruptorSmsMapper smsMapper;
 

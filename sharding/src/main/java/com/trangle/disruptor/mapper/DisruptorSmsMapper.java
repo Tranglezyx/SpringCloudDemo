@@ -1,7 +1,7 @@
 package com.trangle.disruptor.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.danmi.captcha.entity.DisruptorSms;
+import com.trangle.disruptor.entity.DisruptorSms;
 
 public interface DisruptorSmsMapper extends BaseMapper<DisruptorSms> {
 
