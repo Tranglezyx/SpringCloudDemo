@@ -1,3 +1,14 @@
 spring:
   application:
     name: basic-dev
+  jackson:
+    # 时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: GMT+8
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.11.131:30436/zyx-test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456

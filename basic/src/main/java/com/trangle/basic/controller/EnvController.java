@@ -13,7 +13,7 @@ public class EnvController {
     private String applicationName;
 
     @PostMapping("/getName")
-    public String name(){
+    public String getName(){
         return applicationName;
     }
 }
