@@ -1,14 +1,13 @@
-package com.trangle.basic.service.impl;
+package com.trangle.basic.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.trangle.basic.entity.SysUser;
-import com.trangle.basic.mapper.SysUserMapper;
-import com.trangle.basic.service.SysUserService;
+import com.trangle.basic.sys.entity.SysUser;
+import com.trangle.basic.sys.mapper.SysUserMapper;
+import com.trangle.basic.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -23,14 +22,14 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageInfo<SysUser> page(int pageNum, int pageSize, String account, String mobile) {
-        PageHelper.startPage(pageNum, pageSize);
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(account)) {
+        if (account != null && !account.isEmpty()) {
             wrapper.like(SysUser::getAccount, account);
         }
-        if (StringUtils.hasText(mobile)) {
+        if (mobile != null && !mobile.isEmpty()) {
             wrapper.like(SysUser::getMobile, mobile);
         }
+        PageHelper.startPage(pageNum, pageSize);
         return new PageInfo<>(sysUserMapper.selectList(wrapper));
     }
 

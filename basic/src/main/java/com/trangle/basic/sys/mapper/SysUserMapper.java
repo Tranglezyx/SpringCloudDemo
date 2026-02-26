@@ -1,7 +1,7 @@
-package com.trangle.basic.mapper;
+package com.trangle.basic.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.trangle.basic.entity.SysUser;
+import com.trangle.basic.sys.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

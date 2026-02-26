@@ -1,7 +1,7 @@
-package com.trangle.basic.service;
+package com.trangle.basic.sys.service;
 
 import com.github.pagehelper.PageInfo;
-import com.trangle.basic.entity.SysUser;
+import com.trangle.basic.sys.entity.SysUser;
 
 public interface SysUserService {
     SysUser getById(Long id);

@@ -1,4 +1,4 @@
-package com.trangle.basic.entity;
+package com.trangle.basic.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
