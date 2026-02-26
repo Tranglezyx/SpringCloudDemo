@@ -1,4 +1,4 @@
-package com.trangle.basic.sys.common;
+package com.trangle.basic.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

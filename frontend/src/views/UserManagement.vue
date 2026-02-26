@@ -40,13 +40,14 @@ const loadData = async () => {
       account: searchForm.value.account || undefined,
       mobile: searchForm.value.mobile || undefined
     })
-    tableData.value = (result as any).list
-    total.value = (result as any).total
+    tableData.value = result.list
+    total.value = result.total
   } catch (error) {
     ElMessage.error('加载数据失败')
   } finally {
     loading.value = false
   }
+}
 }
 
 const handleSearch = () => {
@@ -201,20 +202,35 @@ onMounted(() => {
 
 <style scoped>
 .user-management {
+  background: #fff;
+  border-radius: 4px;
   padding: 20px;
 }
 
 .search-card {
   margin-bottom: 20px;
+  border: none;
+  box-shadow: none;
 }
 
 .table-card {
-  margin-bottom: 20px;
+  border: none;
+  box-shadow: none;
 }
 
 .pagination {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+.user-management :deep(.el-card__header) {
+  padding: 16px 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.user-management :deep(.el-button + .el-button) {
+  margin-left: 8px;
 }
 </style>

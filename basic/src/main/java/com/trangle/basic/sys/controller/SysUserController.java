@@ -1,7 +1,7 @@
 package com.trangle.basic.sys.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.trangle.basic.sys.common.BaseResponse;
+import com.trangle.basic.common.dto.BaseResponse;
 import com.trangle.basic.sys.entity.SysUser;
 import com.trangle.basic.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;

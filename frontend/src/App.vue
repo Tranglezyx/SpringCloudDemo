@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import MainLayout from './views/MainLayout.vue'
 </script>
 
 <template>
   <div id="app">
-    <RouterView />
+    <MainLayout />
   </div>
 </template>
 
@@ -18,5 +18,14 @@ import { RouterView } from 'vue-router'
 #app {
   width: 100%;
   height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 </style>
