@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 日志文件输出路径 -->
+    <springProperty scope="context" name="SERVICE_NAME" source="spring.application.name" />
+    <property name="LOG_PATH" value="${user.dir}/logs"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出：按日期和容量滚动 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${SERVICE_NAME}.log</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志文件名格式：日期区分，滚动时添加索引 -->
+            <fileNamePattern>${LOG_PATH}/${SERVICE_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 单个文件最大2GB -->
+            <maxFileSize>2GB</maxFileSize>
+            <!-- 保留30天的日志文件 -->
+            <maxHistory>30</maxHistory>
+            <!-- 所有日志文件的总大小上限（可选） -->
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 根日志级别和输出目标 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- 特定包日志级别配置（可选） -->
+    <logger name="com.trangle" level="INFO"/>
+    <logger name="org.springframework" level="WARN"/>
+</configuration>

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: basic-prod
+  jackson:
+    # 时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: GMT+8
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://生产环境数据库地址/数据库名?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: 生产用户名
+    password: 生产密码
+    hikari:
+      maximum-pool-size: 20 # 最大连接数
+      minimum-idle: 10 # 最小空闲连接数
+      idle-timeout: 300000 # 空闲连接超时时间（5分钟）
+      connection-timeout: 20000 # 连接超时时间（20秒）
+
+# 生产环境：关闭MySQL explain日志
+mybatis-plus:
+  performance-interceptor:
+    enabled: false  # 禁用性能分析插件，不打印SQL explain信息
+
+logging:
+  level:
+    com.baomidou.mybatisplus.core.mapper: warn
+    java.sql.Statement: warn
+    java.sql.PreparedStatement: warn
+    org.apache.ibatis: warn
+
+# PageHelper配置（生产环境关闭SQL打印和explain）
+pagehelper:
+  helperDialect: mysql
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  page-size-zero: true
+  params: count=countSql
+  support-methods-arguments: true
+  # 生产环境：关闭SQL打印
+  log-sql: false
+  # 关闭explain日志（关键配置）
+  auto-runtime-dialect: false
+  # 禁用性能分析插件
+  check-runtime-dialect: false

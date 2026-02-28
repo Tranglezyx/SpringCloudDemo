@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: basic-dev
+  jackson:
+    # 时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: GMT+8
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.11.131:30436/zyx-test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    hikari:
+      maximum-pool-size: 10 # 最大连接数
+      minimum-idle: 5 # 最小空闲连接数
+      idle-timeout: 300000 # 空闲连接超时时间（5分钟）
+      connection-timeout: 20000 # 连接超时时间（20秒）
+
+# 测试环境：关闭MySQL explain日志
+mybatis-plus:
+  performance-interceptor:
+    enabled: false  # 禁用性能分析插件，不打印SQL explain信息
+
+logging:
+  level:
+    com.baomidou.mybatisplus.core.mapper: warn
+    java.sql.Statement: warn
+    java.sql.PreparedStatement: warn
+    org.apache.ibatis: warn
+
+# PageHelper配置（测试环境关闭SQL打印和explain）
+pagehelper:
+  # 使用自定义配置类控制explain开关
+  explain:
+    enabled: false  # 禁用explain功能
+  # 其他配置由PageHelperConfig.java统一管理
+
+mysql:
+  showSQL: false

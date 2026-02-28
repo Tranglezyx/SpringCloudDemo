@@ -70,6 +70,32 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>2.1.0</version>
 		</dependency>
+
+		<!-- Source: https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2 -->
+		<dependency>
+			<groupId>com.alibaba.fastjson2</groupId>
+			<artifactId>fastjson2</artifactId>
+			<version>2.0.61</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Redis依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<!-- Kafka依赖 -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<!-- 连接池依赖（用于Kafka和Redis） -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
