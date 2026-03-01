@@ -32,7 +32,7 @@ spring:
           max-wait: -1ms
   # Kafka配置
   kafka:
-    bootstrap-servers: 47.107.94.75:9092
+    bootstrap-servers: localhost:9092
     producer:
       acks: all
       retries: 3
