@@ -2,4 +2,4 @@ spring:
   application:
     name: basic
   profiles:
-    active: dev
+    active: home

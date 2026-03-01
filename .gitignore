@@ -12,6 +12,7 @@ target/
 
 # idea ignore
 .idea/
+.basic/docker/redis-data/
 *.ipr
 *.iml
 *.iws
@@ -39,4 +40,3 @@ Thumbs.db
 
 # dev properties
 src/main/resources/application-dev.yml
-

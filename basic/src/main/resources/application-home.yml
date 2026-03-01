@@ -1,0 +1,83 @@
+spring:
+  application:
+    name: basic-dev
+  jackson:
+    # 时间格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区
+    time-zone: GMT+8
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?createDatabaseIfNotExist=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    hikari:
+      maximum-pool-size: 10 # 最大连接数
+      minimum-idle: 5 # 最小空闲连接数
+      idle-timeout: 300000 # 空闲连接超时时间（5分钟）
+      connection-timeout: 20000 # 连接超时时间（20秒）
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 3
+      timeout: 60000
+      password: 123456
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+  # Kafka配置
+  kafka:
+    bootstrap-servers: 47.107.94.75:9092
+    producer:
+      acks: all
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: sys_user_save_group
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 设置并发消费者数为10
+      concurrency: 10
+
+# 开发环境：开启MySQL explain日志
+mybatis-plus:
+  performance-interceptor:
+    enabled: true  # 启用性能分析插件，会打印SQL执行时间和explain信息
+
+logging:
+  level:
+    com.baomidou.mybatisplus.core.mapper: debug
+    java.sql.Statement: debug
+    java.sql.PreparedStatement: debug
+    org.apache.ibatis: debug
+
+# PageHelper配置（开发环境启用SQL打印和explain）
+pagehelper:
+  helperDialect: mysql
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  page-size-zero: true
+  params: count=countSql
+  support-methods-arguments: true
+  # 开发环境：启用SQL打印
+  log-sql: true
+  # 开发环境：启用explain日志（可选）
+  auto-runtime-dialect: true
+
+# 幂等性配置
+idempotent:
+  redis:
+    prefix: "idempotent:"
+    expire-seconds: 1  # 幂等key过期时间1小时
+

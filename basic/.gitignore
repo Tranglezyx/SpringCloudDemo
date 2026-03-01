@@ -15,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.appendonlydir/
 *.iws
 *.iml
 *.ipr

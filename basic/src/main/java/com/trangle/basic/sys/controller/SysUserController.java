@@ -55,12 +55,12 @@ public class SysUserController {
         // 1. 幂等校验
         // 使用account作为幂等key，防止重复提交
         String idempotentKey = "sys_user_save:" + sysUserDTO.getAccount();
-//        boolean isFirstRequest = idempotentUtil.checkAndSetIdempotent(idempotentKey);
+        boolean isFirstRequest = idempotentUtil.checkAndSetIdempotent(idempotentKey);
 
-//        if (!isFirstRequest) {
-//            log.warn("检测到重复请求, account: {}", sysUserDTO.getAccount());
-//            return BaseResponse.error("请勿重复提交");
-//        }
+        if (!isFirstRequest) {
+            log.warn("检测到重复请求, account: {}", sysUserDTO.getAccount());
+            return BaseResponse.error("请勿重复提交");
+        }
 
         // 2. 构建消息
         String messageId = UUID.randomUUID().toString();
