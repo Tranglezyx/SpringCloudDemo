@@ -32,10 +32,25 @@
         </rollingPolicy>
     </appender>
 
+    <!-- 异步日志 -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 队列大小 -->
+        <queueSize>10240</queueSize>
+
+        <!-- 队列满时是否丢弃低级别日志 -->
+        <discardingThreshold>0</discardingThreshold>
+
+        <!-- 是否在关闭时等待日志刷完 -->
+        <neverBlock>true</neverBlock>
+
+        <appender-ref ref="FILE"/>
+    </appender>
+
     <!-- 根日志级别和输出目标 -->
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--        <appender-ref ref="FILE"/>-->
+        <appender-ref ref="ASYNC_FILE"/>
     </root>
 
     <!-- 特定包日志级别配置（可选） -->
