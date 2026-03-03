@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    container_name: elasticsearch
+    restart: unless-stopped
+    environment:
+      - node.name=es-node-1
+      - cluster.name=es-single-node
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+
+      # JVM 内存设置（根据服务器内存调整）
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+
+      # 关闭安全认证（开发环境用，生产不要关闭）
+      - xpack.security.enabled=false
+
+      - TZ=Asia/Shanghai
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+volumes:
+  es_data:
