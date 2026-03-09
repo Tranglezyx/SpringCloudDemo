@@ -15,8 +15,8 @@ import java.util.Map;
 /**
  * Kafka消费者配置类
  */
-@Configuration
-@EnableKafka
+//@Configuration
+//@EnableKafka
 public class KafkaConsumerConfig {
 
     @Value("${spring.kafka.bootstrap-servers:localhost:9092}")
@@ -67,7 +67,7 @@ public class KafkaConsumerConfig {
      *
      * @return ConsumerFactory<String, String>
      */
-    @Bean
+//    @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
@@ -77,7 +77,7 @@ public class KafkaConsumerConfig {
      *
      * @return ConcurrentKafkaListenerContainerFactory<String, String>
      */
-    @Bean
+//    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();

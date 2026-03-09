@@ -48,9 +48,9 @@
 
     <!-- 根日志级别和输出目标 -->
     <root level="INFO">
-<!--        <appender-ref ref="CONSOLE"/>-->
+        <appender-ref ref="CONSOLE"/>
 <!--        <appender-ref ref="FILE"/>-->
-        <appender-ref ref="ASYNC_FILE"/>
+<!--        <appender-ref ref="ASYNC_FILE"/>-->
     </root>
 
     <!-- 特定包日志级别配置（可选） -->

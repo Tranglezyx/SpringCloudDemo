@@ -1,5 +1,6 @@
 package com.trangle.basic.sys.consumer;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson2.JSON;
 import com.trangle.basic.common.util.IdempotentUtil;
 import com.trangle.basic.sys.dto.SysUserSaveMessage;
@@ -9,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 用户保存消息消费者
@@ -46,6 +50,58 @@ public class SysUserSaveConsumer {
      * 消费用户保存消息
      * 使用10个线程并发消费
      *
+     * @param list 消息记录
+     */
+//    @KafkaListener(
+//            topics = TOPIC,
+//            groupId = GROUP_ID,
+//            concurrency = "10",
+//            properties = {
+//                    "max.poll.records=1000",
+//                    "fetch.min.bytes=1024"
+//            }
+//    )
+//    public void consume(List<String> list, Acknowledgment ack) {
+//        String traceId = IdUtil.nanoId(10);
+//        long start = System.currentTimeMillis();
+//        log.info("收到Kafka消息,trace={}, size={}",traceId,list.size());
+//        for (String value : list) {
+//            try {
+//                // 解析消息
+//                SysUserSaveMessage message = JSON.parseObject(value, SysUserSaveMessage.class);
+//
+//                if (message == null || message.getMessageId() == null) {
+//                    log.error("消息格式错误，缺少messageId, value: {}", value);
+//                    return;
+//                }
+//
+//                // 幂等校验
+//                String idempotentKey = "sys_user_save:" + message.getMessageId();
+//                boolean isFirstRequest = idempotentUtil.checkAndSetIdempotent(idempotentKey);
+//
+//                if (!isFirstRequest) {
+//                    log.warn("消息重复消费，跳过处理, messageId: {}", message.getMessageId());
+//                    return;
+//                }
+//
+//                // 执行业务逻辑
+//                processUserSave(message);
+//
+//                log.info("消息处理成功, messageId: {}", message.getMessageId());
+//
+//            } catch (Exception e) {
+//                log.error("消息处理异常, error=", e);
+//                // 这里可以添加重试逻辑或发送到死信队列
+//            }
+//        }
+//        log.info("消费完毕，trace={},耗时={}ms",traceId,System.currentTimeMillis() - start);
+//        ack.acknowledge();
+//    }
+
+    /**
+     * 消费用户保存消息
+     * 使用10个线程并发消费
+     *
      * @param record 消息记录
      */
     @KafkaListener(
@@ -66,7 +122,7 @@ public class SysUserSaveConsumer {
         try {
             // 解析消息
             SysUserSaveMessage message = JSON.parseObject(value, SysUserSaveMessage.class);
-            
+
             if (message == null || message.getMessageId() == null) {
                 log.error("消息格式错误，缺少messageId, value: {}", value);
                 return;
@@ -75,7 +131,7 @@ public class SysUserSaveConsumer {
             // 幂等校验
             String idempotentKey = "sys_user_save:" + message.getMessageId();
             boolean isFirstRequest = idempotentUtil.checkAndSetIdempotent(idempotentKey);
-            
+
             if (!isFirstRequest) {
                 log.warn("消息重复消费，跳过处理, messageId: {}", message.getMessageId());
                 return;
