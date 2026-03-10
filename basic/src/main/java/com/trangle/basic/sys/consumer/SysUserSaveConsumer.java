@@ -22,7 +22,7 @@ import java.util.List;
  * 并发线程数: 10
  */
 @Slf4j
-@Component
+//@Component
 public class SysUserSaveConsumer {
 
     /**

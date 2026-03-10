@@ -15,8 +15,8 @@ import java.util.Map;
  * Kafka基础配置类
  * 提供通用的Kafka配置和Producer配置
  */
-@Configuration
-@EnableKafka
+//@Configuration
+//@EnableKafka
 public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers:localhost:9092}")

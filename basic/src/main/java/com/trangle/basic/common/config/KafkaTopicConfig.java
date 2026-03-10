@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
  * 服务启动时自动创建所需的Topic
  */
 @Slf4j
-@Configuration
+//@Configuration
 public class KafkaTopicConfig {
 
     /**

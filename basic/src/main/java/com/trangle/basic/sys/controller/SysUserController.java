@@ -2,6 +2,7 @@ package com.trangle.basic.sys.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.github.pagehelper.PageInfo;
+import com.trangle.basic.common.constant.RocketMQConstants;
 import com.trangle.basic.common.dto.BaseResponse;
 import com.trangle.basic.common.enums.KafkaTopicEnum;
 import com.trangle.basic.common.service.KafkaProducerService;
@@ -11,6 +12,7 @@ import com.trangle.basic.sys.dto.SysUserSaveMessage;
 import com.trangle.basic.sys.entity.SysUser;
 import com.trangle.basic.sys.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -39,8 +41,11 @@ public class SysUserController {
     @Autowired
     private IdempotentUtil idempotentUtil;
 
-    @Autowired
+    @Autowired(required = false)
     private KafkaProducerService kafkaProducerService;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     /**
      * 新增用户（带幂等校验和Kafka消息发送）
@@ -78,11 +83,11 @@ public class SysUserController {
         // 3. 发送消息到Kafka
         String topic = KafkaTopicEnum.SYS_USER_SAVE.getTopicName();
         String key = sysUserDTO.getAccount(); // 使用account作为key，保证同一用户的消息发送到同一分区
-        
+
         boolean sendSuccess = kafkaProducerService.sendMessage(topic, key, message);
 
         if (sendSuccess) {
-            log.info("用户保存消息发送成功, account: {}, messageId: {}", 
+            log.info("用户保存消息发送成功, account: {}, messageId: {}",
                     sysUserDTO.getAccount(), messageId);
             return BaseResponse.success(messageId, "用户保存请求已提交，正在处理中");
         } else {
@@ -159,5 +164,49 @@ public class SysUserController {
     public BaseResponse<Boolean> delete(@PathVariable("id") Long id) {
         boolean remove = sysUserService.deleteById(id);
         return BaseResponse.success(remove);
+    }
+
+    /**
+     * 新增用户（带幂等校验和Kafka消息发送）
+     *
+     * @param sysUserDTO 用户DTO
+     * @return BaseResponse
+     */
+    @PostMapping("/save-with-rocketmq")
+    public BaseResponse<String> saveWithRocketmq(@RequestBody @Validated SysUserDTO sysUserDTO) {
+        log.info("收到用户保存请求, account: {}", sysUserDTO.getAccount());
+
+        // 1. 幂等校验
+        // 使用account作为幂等key，防止重复提交
+        String idempotentKey = "sys_user_save:" + sysUserDTO.getAccount();
+        boolean isFirstRequest = idempotentUtil.checkAndSetIdempotent(idempotentKey);
+
+        if (!isFirstRequest) {
+            log.warn("检测到重复请求, account: {}", sysUserDTO.getAccount());
+            return BaseResponse.error("请勿重复提交");
+        }
+
+        // 2. 构建消息
+        String messageId = UUID.randomUUID().toString();
+        SysUserSaveMessage message = SysUserSaveMessage.builder()
+                .messageId(messageId)
+                .account(sysUserDTO.getAccount())
+                .mobile(sysUserDTO.getMobile())
+                .password(sysUserDTO.getPassword())
+                .nickName(sysUserDTO.getNickName())
+                .createTime(LocalDateTime.now())
+                .operatorId(sysUserDTO.getOperatorId())
+                .operatorName(sysUserDTO.getOperatorName())
+                .build();
+
+        // 3. 发送消息到Kafka
+        String topic = RocketMQConstants.SYS_USER_TOPIC;
+        String key = sysUserDTO.getAccount(); // 使用account作为key，保证同一用户的消息发送到同一分区
+
+        rocketMQTemplate.convertAndSend(topic, message);
+
+        log.info("用户保存消息发送成功, account: {}, messageId: {}",
+                sysUserDTO.getAccount(), messageId);
+        return BaseResponse.success(messageId, "用户保存请求已提交，正在处理中");
     }
 }
