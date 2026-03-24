@@ -1,6 +1,7 @@
 package com.trangle.basic.sys.controller;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.trangle.basic.common.constant.RocketMQConstants;
 import com.trangle.basic.common.dto.BaseResponse;
@@ -12,6 +13,8 @@ import com.trangle.basic.sys.dto.SysUserSaveMessage;
 import com.trangle.basic.sys.entity.SysUser;
 import com.trangle.basic.sys.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,7 +206,18 @@ public class SysUserController {
         String topic = RocketMQConstants.SYS_USER_TOPIC;
         String key = sysUserDTO.getAccount(); // 使用account作为key，保证同一用户的消息发送到同一分区
 
-        rocketMQTemplate.convertAndSend(topic, message);
+//        rocketMQTemplate.convertAndSend(topic, message);
+        String jsonString = JSONObject.toJSONString(message);
+        rocketMQTemplate.asyncSend(topic, jsonString, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("提交失败,messageId={}", messageId);
+            }
+        });
 
         log.info("用户保存消息发送成功, account: {}, messageId: {}",
                 sysUserDTO.getAccount(), messageId);

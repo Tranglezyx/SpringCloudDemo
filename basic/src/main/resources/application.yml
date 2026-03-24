@@ -3,3 +3,6 @@ spring:
     name: basic
   profiles:
     active: home
+
+server:
+  port: 8080

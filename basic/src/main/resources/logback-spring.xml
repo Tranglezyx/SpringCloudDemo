@@ -2,8 +2,9 @@
 <configuration>
     <!-- 日志文件输出路径 -->
     <springProperty scope="context" name="SERVICE_NAME" source="spring.application.name" />
+    <springProperty scope="context" name="PORT" source="server.port" />
     <property name="LOG_PATH" value="${user.dir}/logs"/>
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level ${PORT} %logger{36} - %msg%n"/>
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -15,7 +16,7 @@
 
     <!-- 文件输出：按日期和容量滚动 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/${SERVICE_NAME}.log</file>
+        <file>${LOG_PATH}/${SERVICE_NAME}-${PORT}.log</file>
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
@@ -46,11 +47,20 @@
         <appender-ref ref="FILE"/>
     </appender>
 
+    <appender name="LOGSTASH" class="ch.qos.logback.core.ConsoleAppender">
+<!--        <file>logs/app.log</file>-->
+
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>true</includeContext>
+        </encoder>
+    </appender>
+
     <!-- 根日志级别和输出目标 -->
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--        <appender-ref ref="LOGSTASH"/>-->
 <!--        <appender-ref ref="FILE"/>-->
-<!--        <appender-ref ref="ASYNC_FILE"/>-->
+        <appender-ref ref="ASYNC_FILE"/>
     </root>
 
     <!-- 特定包日志级别配置（可选） -->
